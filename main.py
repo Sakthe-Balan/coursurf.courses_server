@@ -60,4 +60,16 @@ def courseProvider(provider):
   print("Courses loaded")
   # browser.quit()
 
-courseProvider("coursera")
+
+def courseProviderURL(provider):
+  browser.maximize_window()
+  baseUrl = "https://www.classcentral.com/provider/" + provider
+  for i in range(1,5):
+    browser.get(str(baseUrl+"?page="+str(i)))
+    # time.sleep(2)
+
+  
+  
+
+# courseProvider("coursera")
+courseProviderURL("coursera")
