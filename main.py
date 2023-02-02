@@ -66,9 +66,16 @@ def courseProviderURL(provider):
   baseUrl = "https://www.classcentral.com/provider/" + provider
   for i in range(1,5):
     browser.get(str(baseUrl+"?page="+str(i)))
+    xpath = ['//*[@id="page-provider"]/div[1]/div[3]/div[5]/ol/li[1]','//*[@id="page-provider"]/div[1]/div[3]/div[5]/ol/li[2]','//*[@id="page-provider"]/div[1]/div[3]/div[5]/ol/li[3]','//*[@id="page-provider"]/div[1]/div[3]/div[5]/ol/li[4]','//*[@id="page-provider"]/div[1]/div[3]/div[5]/ol/li[5]']
+    for card in xpath:
+      result = browser.find_element(By.XPATH, '//*[@id="page-provider"]/div[1]/div[3]/div[5]/ol/li[3]')
+      result = result.find_element(By.XPATH, '//div[1]/div[1]/div[2]/a[1]/h2')
+      result = result.get_attribute('innerHTML')
+      print(result)
+      time.sleep(1)
     # time.sleep(2)
 
-  
+# xpath for courseproviders = //*[@id="page-provider"]/div[1]/div[3]/div[5]/ol/li[1]
   
 
 # courseProvider("coursera")
