@@ -4,6 +4,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 import time 
+import csv
+
 
 path = "msedgedriver.exe"
 browser = webdriver.Edge(path)
@@ -62,20 +64,26 @@ def courseProvider(provider):
 
 
 def courseProviderURL(provider):
-  browser.maximize_window()
-  baseUrl = "https://www.classcentral.com/provider/" + provider
-  for i in range(1,5):
-    browser.get(str(baseUrl+"?page="+str(i)))
-    xpath = ['//*[@id="page-provider"]/div[1]/div[3]/div[5]/ol/li[1]','//*[@id="page-provider"]/div[1]/div[3]/div[5]/ol/li[2]','//*[@id="page-provider"]/div[1]/div[3]/div[5]/ol/li[3]','//*[@id="page-provider"]/div[1]/div[3]/div[5]/ol/li[4]','//*[@id="page-provider"]/div[1]/div[3]/div[5]/ol/li[5]']
-    for card in xpath:
-      result = browser.find_element(By.XPATH, '//*[@id="page-provider"]/div[1]/div[3]/div[5]/ol/li[3]')
-      result = result.find_element(By.XPATH, '//div[1]/div[1]/div[2]/a[1]/h2')
-      result = result.get_attribute('innerHTML')
-      print(result)
-      time.sleep(1)
-    # time.sleep(2)
-
-# xpath for courseproviders = //*[@id="page-provider"]/div[1]/div[3]/div[5]/ol/li[1]
+  with open('countries1.csv', 'w', encoding='UTF8', newline='') as f:
+    writer = csv.writer(f)
+    browser.maximize_window()
+    baseUrl = "https://www.classcentral.com/provider/" + provider
+    for i in range(1,666):
+      try:
+        browser.get(str(baseUrl+"?page="+str(i)))
+        wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="page-provider"]/div[1]/div[3]/div[5]/ol/li[15]')))
+        for n in range(1,16):
+          # xpath for courseproviders = //*[@id="page-provider"]/div[1]/div[3]/div[5]/ol/li[1]
+          result = browser.find_element(By.XPATH, '//*[@id="page-provider"]/div[1]/div[3]/div[5]/ol/li'+str([n]))
+          result = result.find_element(By.XPATH, 'div[1]/div[1]/div[2]/a[1]/h2')
+          result = result.get_attribute('innerHTML')
+          print(result)
+          writer.writerow([str(result)])
+      except:
+        browser.quit()
+        print("No more courses to load")
+      print("------------------------------------ "+str(i)+" ------------------------------------")
+      time.sleep(1.1)
   
 
 # courseProvider("coursera")
