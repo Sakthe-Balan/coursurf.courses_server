@@ -7,7 +7,7 @@ import time
 import csv
 
 
-path = "msedgedriver.exe"
+path = "./lib/msedgedriver.exe"
 browser = webdriver.Edge(path)
 
 website = "https://www.classcentral.com/"
